@@ -27,27 +27,11 @@ router.get('/', async function(req, res, next) {
       }
       if(query.days) {
         days = parseInt(query.days);
+        if(days < 1 || days > 90) throw new Error('Days must be between 1 and 90.');
       }
     }
     stats = await covid.covidStats(sourceCountries, estimateCountry, days);
-    var statsJSONstring = JSON.stringify({ message: stats });
-    var statsJSON = JSON.parse(statsJSONstring);
-
-    var fraction = statsJSON.message.IFREstimate[0].IFR.fraction;
-    var IFRpercent = statsJSON.message.IFREstimate[0].IFR.percent;
-    var data = statsJSON.message.IFREstimate[0].data;
-    var estimateFromSources = statsJSON.message.estimateFromSources;
-    var estimate = statsJSON.message.IFREstimate[0].estimateCountry;
-
-    res.render('index', {
-      layout: false,
-      title: "Home page",
-      IFR : IFRpercent,
-      dataJson: data,
-      estimateFromSourcesJson: estimateFromSources,
-      estimateCountry: estimate,
-    });
-     
+    res.status(200).send({ message: stats });     
   } catch (error) {
     console.log(error.stack);
     res.send({ message: error.message });

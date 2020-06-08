@@ -84,7 +84,7 @@ function calculateIFRStats(data, IFRData, estimateCountry, days) {
 async function covidStats(sourceCountries = [], estimateCountry = '', days) {
     return new Promise(async (resolve, reject) => {
         try {   
-            let allData = await db.fetchTotalDataNew(sourceCountries, estimateCountry, days);
+            let allData = await db.fetchTotalData(sourceCountries, estimateCountry, days);
             let stats = {
                 IFREstimate: {},
                 estimateFromSources: [],
