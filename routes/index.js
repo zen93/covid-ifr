@@ -3,7 +3,17 @@ var express = require('express');
 var router = express.Router();
 
 const covid = require('../controllers/covid');
+const countries = require('../controllers/countries');
 
+router.get('/countries', async function(req, res, next) {
+  try {
+    let data = await countries.getAllCountries();
+    res.status(200).send({ message: data });
+  } catch (error) {
+    console.log(error.stack);
+    res.status(500).send({ message: error.message });
+  }
+});
 
 router.get('/', async function(req, res, next) {
   try {
@@ -31,10 +41,10 @@ router.get('/', async function(req, res, next) {
       }
     }
     stats = await covid.covidStats(sourceCountries, estimateCountry, days);
-    res.status(200).send({ message: stats });     
+    res.status(200).send({ message: stats });
   } catch (error) {
     console.log(error.stack);
-    res.send({ message: error.message });
+    res.status(500).send({ message: error.message });
   }
   
 });

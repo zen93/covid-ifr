@@ -36,6 +36,14 @@ const db = new Firestore({
 //     });
 // }
 
+async function fetchAllCountriesData() {
+    let collection = 'CountryDetails', doc = 'countries', data = [];
+    let snapshot = await db.collection(collection).doc(doc).get();
+    if(snapshot.data()) data = snapshot.data();
+    else throw new Error('No country data available!');
+    return data;
+}
+
 async function fetchTotalData(sourceCountries, estimateCountry, days) {
     return new Promise(async (resolve, reject) => {
         try {
@@ -85,4 +93,5 @@ async function fetchTotalData(sourceCountries, estimateCountry, days) {
     });
 }
 
+module.exports.fetchAllCountriesData = fetchAllCountriesData;
 module.exports.fetchTotalData = fetchTotalData;

@@ -2,12 +2,13 @@ var createError = require('http-errors');
 var express = require('express');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const exphbs = require('express-handlebars');
+var cors = require('cors');
 var indexRouter = require('./routes');
 
 var app = express();
 
-// view engine setup
+app.use(cors());
+app.options('*', cors()); //Allow all origins
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
