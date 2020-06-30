@@ -34,6 +34,7 @@ router.get('/', async function(req, res, next) {
           sourceCountries[i] = sourceCountries[i].trim().toLowerCase();
         }
         sourceCountries = sourceCountries.filter((el) => el != '');
+        if(sourceCountries.length > 5) throw new Error('Source countries must be at most 5.');
       }
       if(query.days) {
         days = parseInt(query.days);
