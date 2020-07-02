@@ -13,7 +13,7 @@ const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 1250,
   message:
-    "Too many accounts created from this IP, please try again after 15 minutes"
+    "Too many requests from this IP, please try again after 15 minutes"
 });
 
 app.use(limiter);
