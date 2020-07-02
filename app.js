@@ -3,10 +3,20 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
+var rateLimit = require('express-rate-limit');
+
 var indexRouter = require('./routes');
 
 var app = express();
 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message:
+    "Too many accounts created from this IP, please try again after 15 minutes"
+});
+
+app.use(limiter);
 app.use(cors());
 app.options('*', cors()); //Allow all origins
 app.use(logger('dev'));
