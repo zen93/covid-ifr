@@ -11,7 +11,7 @@ var app = express();
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 10,
+  max: 1250,
   message:
     "Too many accounts created from this IP, please try again after 15 minutes"
 });
